@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "devDependencies": {
+    "@tanstack/router-plugin": "^1.168.36",
     "@types/bun": "latest",
     "@vitejs/plugin-react": "^6.1.1",
     "vite": "^8.2.2"
@@ -17,6 +18,8 @@
     "@reduxjs/toolkit": "^2.12.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/react-router": "^1.170.33",
+    "@tanstack/react-router-devtools": "^1.167.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "postcss-preset-mantine": "^1.18.0",
