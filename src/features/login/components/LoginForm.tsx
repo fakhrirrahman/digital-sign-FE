@@ -63,17 +63,17 @@ export function LoginForm({ loginState }: { loginState: ReturnType<typeof useLog
 
         {/* Authentication Form */}
         <form className="space-y-4" onSubmit={handleLogin}>
-          {/* Input 1: NIP / NIK */}
+          {/* Input 1: NIP / NIK / Telepon */}
           <div>
             <div className="flex justify-between items-center mb-1.5">
               <label className="font-label-md text-on-surface" htmlFor="identifier">
-                {activeTab === 'superadmin' ? 'ID Admin / Email' : 'NIP Pejabat / NIK KTP Terdaftar'}
+                {activeTab === 'superadmin' ? 'Nomor Telepon Admin' : 'NIP Pejabat / NIK KTP Terdaftar'}
               </label>
             </div>
             <TextInput 
               size="md"
               id="identifier"
-              placeholder={activeTab === 'kades' ? "19780512 200501 1 008" : activeTab === 'operator' ? "3204128900010003" : "admin@ossdesa.id"}
+              placeholder={activeTab === 'kades' ? "19780512 200501 1 008" : activeTab === 'operator' ? "3204128900010003" : "081234567890"}
               value={identifier}
               onChange={(e) => setIdentifier(e.currentTarget.value)}
               required

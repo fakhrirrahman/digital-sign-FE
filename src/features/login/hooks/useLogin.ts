@@ -2,6 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { authApi } from '../api/auth.api';
 
+const getLoginToken = (data: any) =>
+  data?.token
+  ?? data?.accessToken
+  ?? data?.access_token
+  ?? data?.data?.token
+  ?? data?.data?.accessToken
+  ?? data?.data?.access_token;
+
 export function useLogin() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'kades' | 'operator' | 'superadmin'>('kades');
@@ -32,6 +40,15 @@ export function useLogin() {
     try {
       const result = await authApi.login(identifier, password);
       if (result.success) {
+        const token = getLoginToken(result.data);
+
+        if (!token) {
+          showToastMsg('Login Gagal', 'Token login tidak ditemukan dari server.');
+          return;
+        }
+
+        localStorage.setItem('auth_token', token);
+        
         showToastMsg('Login Berhasil', 'Selamat datang di Portal OSS Desa. Mengalihkan ke Dashboard...');
         
         // Navigate to dashboard after short delay

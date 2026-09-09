@@ -1,29 +1,56 @@
+const getToken = () => localStorage.getItem('auth_token');
+
+const requestJson = async (url: string) => {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error('Sesi login tidak ditemukan. Silakan login ulang.');
+  }
+
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+  const res = await fetch(`${baseUrl}${url}`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+
+  const contentType = res.headers.get('content-type') ?? '';
+  const body = contentType.includes('application/json')
+    ? await res.json()
+    : await res.text();
+
+  if (!res.ok) {
+    const message = typeof body === 'string'
+      ? body
+      : body?.error?.message ?? body?.message ?? 'Request gagal';
+
+    if (res.status === 401) {
+      localStorage.removeItem('auth_token');
+      window.location.assign('/login');
+    }
+
+    throw new Error(`${res.status} ${res.statusText}: ${message}`);
+  }
+
+  return body;
+};
+
 export const dashboardApi = {
   getStats: async () => {
-    const res = await fetch('/api/dashboard/stats', {
-      headers: { 'Authorization': `Bearer fake-token-for-dev` }
-    });
-    return res.json();
+    return requestJson('/api/dashboard/stats');
   },
   
   getChartData: async () => {
-    const res = await fetch('/api/dashboard/chart', {
-      headers: { 'Authorization': `Bearer fake-token-for-dev` }
-    });
-    return res.json();
+    return requestJson('/api/dashboard/chart');
   },
 
   getSignerStatus: async () => {
-    const res = await fetch('/api/signer-setup/status', {
-      headers: { 'Authorization': `Bearer fake-token-for-dev` }
-    });
-    return res.json();
+    return requestJson('/api/signer-setup/status');
   },
 
   getApprovalQueue: async () => {
-    const res = await fetch('/api/approval-process', {
-      headers: { 'Authorization': `Bearer fake-token-for-dev` }
-    });
-    return res.json();
+    return requestJson('/api/approval-process');
+  },
+
+  getAuthUser: async () => {
+    return requestJson('/api/auth/me');
   }
 };

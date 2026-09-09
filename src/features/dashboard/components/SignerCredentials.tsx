@@ -1,9 +1,18 @@
 import React from 'react';
 import { Key, Lock } from 'lucide-react';
 import { useSignerStatus } from '../hooks/useSignerStatus';
+import { useAuthUser } from '../../../shared/hooks/useAuthUser';
 
 export function SignerCredentials() {
   const { status: displayStatus } = useSignerStatus();
+  const { user } = useAuthUser();
+  
+  // Ambil inisial dari nama
+  const initials = user?.name
+    ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
+    : 'WS';
+    
+  const nik = user?.penduduk?.nik || user?.telepon || '197804122005011004';
 
   return (
     <div className="lg:col-span-4 flex flex-col gap-unit-md">
@@ -19,12 +28,12 @@ export function SignerCredentials() {
           </div>
           <div className="flex items-center gap-unit-md p-unit-sm bg-surface-container-low rounded-lg mb-unit-md">
             <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-md text-headline-md shadow-sm">
-              WS
+              {initials}
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="font-title-md text-title-md text-on-surface truncate">I Wayan Sudarma, S.IP</span>
-              <span className="font-body-sm text-body-sm text-outline truncate">Kades Pemecutan Kaja</span>
-              <span className="font-label-sm text-label-sm text-primary font-mono mt-0.5">NIP: 197804122005011004</span>
+              <span className="font-title-md text-title-md text-on-surface truncate">{user?.name || 'I Wayan Sudarma, S.IP'}</span>
+              <span className="font-body-sm text-body-sm text-outline truncate">{user?.role?.name || 'Kades Pemecutan Kaja'}</span>
+              <span className="font-label-sm text-label-sm text-primary font-mono mt-0.5">NIK: {nik}</span>
             </div>
           </div>
           <div className="space-y-unit-sm font-body-sm text-body-sm">

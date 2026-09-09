@@ -1,12 +1,22 @@
-import React, { ReactNode } from 'react';
-import { ActionIcon, Indicator, Avatar } from '@mantine/core';
-import { ShieldCheck, Search, Bell, User } from 'lucide-react';
+import React, { type ReactNode } from 'react';
+import { ActionIcon, Indicator, Avatar, Tooltip } from '@mantine/core';
+import { ShieldCheck, Search, Bell, User, LogOut } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
+import { useAuthUser } from '../hooks/useAuthUser';
 
 interface DashboardLayoutProps {
   children: ReactNode;
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
+  const navigate = useNavigate();
+  const { user } = useAuthUser();
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token');
+    navigate({ to: '/login' });
+  };
+
   return (
     <div className="bg-surface font-body-md text-body-md text-on-surface antialiased min-h-screen flex flex-col">
       <header className="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
@@ -48,12 +58,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               </div>
               <div className="flex items-center gap-unit-sm pl-unit-xs">
                 <div className="hidden md:flex flex-col text-right">
-                  <span className="font-label-md text-label-md text-on-surface">I Wayan Sudarma, S.IP</span>
-                  <span className="font-label-sm text-label-sm text-outline">Kepala Desa (Kelihan)</span>
+                  <span className="font-label-md text-label-md text-on-surface">{user?.name || "Memuat..."}</span>
+                  <span className="font-label-sm text-label-sm text-outline">{user?.role?.name || "Pegawai"}</span>
                 </div>
                 <Avatar color="red" radius="xl">
                   <User size={18} />
                 </Avatar>
+                <div className="h-6 w-px bg-outline-variant mx-1"></div>
+                <Tooltip label="Keluar (Logout)" position="bottom" withArrow>
+                  <ActionIcon variant="subtle" color="red" radius="xl" size="lg" onClick={handleLogout}>
+                    <LogOut size={20} />
+                  </ActionIcon>
+                </Tooltip>
               </div>
             </div>
           </div>
