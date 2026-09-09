@@ -1,7 +1,6 @@
+import React from 'react';
+import { DashboardPage } from './features/dashboard/pages/DashboardPage';
+
 export default function App() {
-  return (
-    <div className="w-full h-screen flex items-center justify-center bg-gray-100">
-      <h1>Hello, World!</h1>
-    </div>
-  );
+  return <DashboardPage />;
 }
