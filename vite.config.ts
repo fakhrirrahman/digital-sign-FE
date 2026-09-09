@@ -19,8 +19,7 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
     ],
     server: {
-      port: Number(env.PORT) || 5172,
-      strictPort: true,
+      strictPort: false,
       proxy: {
         // Endpoint khusus untuk Digital Sign (Backend Lokal Elysia)
         "/api/dashboard": {

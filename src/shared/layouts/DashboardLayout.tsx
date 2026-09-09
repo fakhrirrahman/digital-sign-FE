@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react';
 import { ActionIcon, Indicator, Avatar, Tooltip } from '@mantine/core';
 import { ShieldCheck, Search, Bell, User, LogOut } from 'lucide-react';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate, Link } from '@tanstack/react-router';
 import { useAuthUser } from '../hooks/useAuthUser';
 
 interface DashboardLayoutProps {
@@ -78,7 +78,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <a className="px-unit-md py-unit-xs bg-primary text-on-primary font-label-md text-label-md rounded-lg shadow-sm whitespace-nowrap" href="#">Beranda/Dashboard</a>
               <a className="px-unit-md py-unit-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-label-md text-label-md rounded-lg transition-colors whitespace-nowrap" href="#">Antrean Dokumen</a>
               <a className="px-unit-md py-unit-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-label-md text-label-md rounded-lg transition-colors whitespace-nowrap" href="#">Review &amp; Sign</a>
-              <a className="px-unit-md py-unit-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-label-md text-label-md rounded-lg transition-colors whitespace-nowrap" href="#">Signer Setup</a>
+              <Link to="/signer-setup" className="px-unit-md py-unit-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-label-md text-label-md rounded-lg transition-colors whitespace-nowrap active:bg-primary active:text-on-primary">Signer Setup</Link>
               <a className="px-unit-md py-unit-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-label-md text-label-md rounded-lg transition-colors whitespace-nowrap" href="#">Riwayat &amp; Audit</a>
               <a className="px-unit-md py-unit-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface font-label-md text-label-md rounded-lg transition-colors whitespace-nowrap" href="#">Pengaturan</a>
             </nav>
